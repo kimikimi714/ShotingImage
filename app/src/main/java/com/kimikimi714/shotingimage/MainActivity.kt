@@ -2,42 +2,44 @@ package com.kimikimi714.shotingimage
 
 import android.content.Context
 import android.graphics.Canvas
-import android.graphics.drawable.ShapeDrawable
-import android.graphics.drawable.shapes.OvalShape
+import android.graphics.Color
+import android.graphics.Paint
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 
+
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var customDrawableView: CustomDrawableView
+    private var yval = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        setContentView(R.layout.activity_main)
-        customDrawableView = CustomDrawableView(this)
+        val testView = TestView(this)
+        setContentView(testView)
 
-        setContentView(customDrawableView)
+        // 最終position
+        val endPosition = 1000
+        val testAnimation = TestAnimation(testView, endPosition)
+        // アニメーションの起動期間を設定
+        testAnimation.setDuration(5000)
+        testView.startAnimation(testAnimation)
     }
 
-    class CustomDrawableView(context: Context) : View(context) {
-        private val drawable: ShapeDrawable = run {
-            val x = 10
-            val y = 10
-            val width = 300
-            val height = 250
-            contentDescription = context.resources.getString(R.string.my_view_desc)
+    inner class TestView(context: Context) : View(context) {
+        internal var paint = Paint()
 
-            ShapeDrawable(OvalShape()).apply {
-                // If the color isn't set, the shape uses black as the default.
-                paint.color = 0xff74AC23.toInt()
-                // If the bounds aren't set, the shape can't be drawn.
-                setBounds(x, y, x + width, y + height)
-            }
-        }
+        val position: Int
+            get() = yval
 
         override fun onDraw(canvas: Canvas) {
-            drawable.draw(canvas)
+            paint.setColor(Color.argb(255, 125, 125, 125))
+            // (left, top, right, bottom) 左上(400, 100)を起点に幅200の矩形
+            canvas.drawRect(400f, (100 + yval).toFloat(), 600f, (300 + yval).toFloat(), paint)
+        }
+
+        fun setPositon(pos: Int) {
+            yval = pos
         }
     }
 }
