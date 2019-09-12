@@ -1,0 +1,2 @@
+# ShotingImage
+androidのアニメーション練習用リポジトリ
