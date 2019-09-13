@@ -8,6 +8,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 
 import com.kimikimi714.shotingimage.animation.FallAnimation
+import com.kimikimi714.shotingimage.view.FallViewInterface
 
 class MainActivity : AppCompatActivity() {
 
@@ -22,18 +23,19 @@ class MainActivity : AppCompatActivity() {
         val testAnimation = FallAnimation(testView, endPosition)
         // アニメーションの起動期間を設定
         testAnimation.setDuration(5000)
+
         testView.startAnimation(testAnimation)
     }
 
-    inner class TestView(context: Context) : View(context) {
+    inner class TestView(context: Context) : View(context), FallViewInterface {
         private var paint = Paint()
 
         private var leftAbsPos = 400f
         private var topAbsPos = 100f
         private var recWidth = 200f
 
-        private var yval = 0
-        val position: Int
+        override var yval = 0
+        override val position
             get() = yval
 
         override fun onDraw(canvas: Canvas) {
@@ -49,7 +51,7 @@ class MainActivity : AppCompatActivity() {
             )
         }
 
-        fun setPositon(pos: Int) {
+        override fun setPosition(pos: Int) {
             yval = pos
         }
     }

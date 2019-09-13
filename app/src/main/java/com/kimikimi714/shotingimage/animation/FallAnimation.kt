@@ -22,7 +22,7 @@ class FallAnimation internal constructor(private val testView: MainActivity.Test
         val pp = ((endPosition - currentPosition) * interpolatedTime).toInt()
 
         // 矩形のY軸位置をセット
-        testView.setPositon(pp)
+        testView.setPosition(pp)
         testView.requestLayout()
     }
 
