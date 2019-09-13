@@ -1,10 +1,10 @@
-package com.kimikimi714.shotingimage
+package com.kimikimi714.shotingimage.animation
 
 import android.view.animation.Animation
 import android.view.animation.Transformation
+import com.kimikimi714.shotingimage.MainActivity
 
-
-class TestAnimation internal constructor(private val testView: MainActivity.TestView, pos: Int) :
+class FallAnimation internal constructor(private val testView: MainActivity.TestView, pos: Int) :
     Animation() {
 
     private var currentPosition = 0
