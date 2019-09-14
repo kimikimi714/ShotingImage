@@ -3,10 +3,12 @@ package com.kimikimi714.shotingimage.view
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Paint
+import android.graphics.Path
 import android.graphics.RectF
 import android.view.MotionEvent
 import android.view.View
 import androidx.core.content.ContextCompat
+
 import com.kimikimi714.shotingimage.R
 import com.kimikimi714.shotingimage.animation.VerticalAnimation
 
@@ -28,7 +30,7 @@ class ShotingView(context: Context) : View(context) {
         if (firstTouch) {
             bullet.shot()
             canvas.drawOval(bullet, bullet.paint)
-            canvas.drawRect(aircraft, aircraft.paint)
+            canvas.drawPath(aircraft, aircraft.paint)
         }
     }
 
@@ -36,8 +38,8 @@ class ShotingView(context: Context) : View(context) {
         if (!firstTouch) {
             firstTouch = true
         }
-
-        aircraft.moveTo(event.x, event.y)
+        aircraft.reset()
+        aircraft.touch(event.x, event.y)
         bullet = Bullet(event.x, event.y)
         // アニメーションの起動期間を設定
         animation.setDuration(2000)
@@ -62,36 +64,34 @@ class ShotingView(context: Context) : View(context) {
             this.topAbs = top
 
             this.left = left - rectHalfWidth
-            this.top = top - rectHalfWidth
+            this.top = top
             this.right = left + rectHalfWidth
-            this.bottom = top + rectHalfWidth
+            this.bottom = top + 2 * rectHalfWidth
 
             this.paint.color = ContextCompat.getColor(context, R.color.colorAccent)
         }
 
         fun shot() {
-            top =  topAbs - rectHalfWidth - yval
+            top = topAbs - rectHalfWidth - yval
             bottom = topAbs + rectHalfWidth - yval
         }
     }
 
-    inner class Aircraft() : RectF() {
+    inner class Aircraft() : Path() {
         val paint = Paint()
         private val rectHalfWidth = 50f
 
-        constructor(left: Float, top: Float) : this() {
-            this.left = left - rectHalfWidth
-            this.top = top - rectHalfWidth
-            this.right = left + rectHalfWidth
-            this.bottom = top + rectHalfWidth
+        constructor(x: Float, y: Float) : this() {
+            touch(x, y)
             this.paint.color = ContextCompat.getColor(context, R.color.colorPrimaryDark)
+            this.paint.setStyle(Paint.Style.FILL)
         }
 
-        fun moveTo(x: Float, y: Float) {
-            left = x - rectHalfWidth
-            top = y - rectHalfWidth
-            right = x + rectHalfWidth
-            bottom = y + rectHalfWidth
+        fun touch(x: Float, y: Float) {
+            this.moveTo(x, y - rectHalfWidth)
+            this.lineTo(x - rectHalfWidth, y + 2 * rectHalfWidth)
+            this.lineTo(x + rectHalfWidth, y + 2 * rectHalfWidth)
+            this.close()
         }
     }
 }
