@@ -5,6 +5,7 @@ import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Path
 import android.graphics.RectF
+import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import androidx.core.content.ContextCompat
@@ -20,24 +21,25 @@ class ShotingView(context: Context) : View(context) {
      */
     private var firstTouch = false
 
-    private var bullet = Bullet(0f, 0f)
+    private var bullet = Bullet(540f, 1600f)
+    private val aircraft = Aircraft(540f, 1600f)
     private var yval = 0
     val position: Int
         get() = yval
-    private val aircraft = Aircraft(0f, 0f)
 
     override fun onDraw(canvas: Canvas) {
         if (firstTouch) {
             bullet.shot()
             canvas.drawOval(bullet, bullet.paint)
-            canvas.drawPath(aircraft, aircraft.paint)
         }
+        canvas.drawPath(aircraft, aircraft.paint)
     }
 
     override fun dispatchTouchEvent(event: MotionEvent): Boolean {
         if (!firstTouch) {
             firstTouch = true
         }
+        Log.d("Position ", "x: " + event.x.toString() + " y: " + event.y.toString())
         aircraft.reset()
         aircraft.touch(event.x, event.y)
         bullet = Bullet(event.x, event.y)
