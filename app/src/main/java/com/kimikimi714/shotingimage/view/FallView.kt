@@ -11,8 +11,7 @@ import com.kimikimi714.shotingimage.R
 import kotlin.random.Random
 
 class FallView(context: Context) : View(context) {
-    private var left = 0f
-    private var top = 0f
+    private var rect = FallSquare(Random.nextFloat() * 800, Random.nextFloat() * 500)
     private var yval = 0
     val position: Int
         get() = yval
@@ -21,16 +20,8 @@ class FallView(context: Context) : View(context) {
      * 描画・再描画時に呼ばれる
      */
     override fun onDraw(canvas: Canvas) {
-        canvas.drawRect(createRecf(left, top), accentPaint())
-    }
-
-    /**
-     * ビューのウインドウへの割当時によばれる
-     */
-    override fun onAttachedToWindow() {
-        super.onAttachedToWindow()
-        left = Random.nextFloat() * 800
-        top = Random.nextFloat() * 500
+        rect.fall()
+        canvas.drawRect(rect, accentPaint())
     }
 
     /**
@@ -49,16 +40,19 @@ class FallView(context: Context) : View(context) {
         return accent
     }
 
-    /**
-     * 矩形を作る
-     */
-    private fun createRecf(left: Float, top: Float): RectF {
-        val recWidth = 200f
-        return RectF(
-            left,
-            top + yval,
-            left + recWidth,
-            top + recWidth + yval
-        )
+    inner class FallSquare() : RectF() {
+        private val rectWidth = 200f
+
+        constructor(left: Float, top: Float) : this() {
+            this.left = left
+            this.top = top
+            this.right = left + rectWidth
+            this.bottom = top + rectWidth
+        }
+
+        fun fall() {
+            rect.top = rect.top + yval
+            rect.bottom = rect.top + rectWidth
+        }
     }
 }
