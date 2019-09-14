@@ -3,7 +3,9 @@ package com.kimikimi714.shotingimage.view
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Paint
+import android.graphics.RectF
 import android.view.View
+
 import com.kimikimi714.shotingimage.R
 
 class FallView(context: Context) : View(context) {
@@ -21,16 +23,16 @@ class FallView(context: Context) : View(context) {
         // 矩形の色を設定
         paint.color = resources.getColor(R.color.colorAccent)
         // (left, top, right, bottom) 左上(400, 100)を起点に幅200の矩形を書いてyvalずつ下に向かって移動
-        canvas.drawRect(
+        val rect = RectF(
             leftAbsPos,
             topAbsPos + yval,
             leftAbsPos + recWidth,
-            topAbsPos + recWidth + yval,
-            paint
+            topAbsPos + recWidth + yval
         )
+        canvas.drawRect(rect, paint)
     }
 
-     fun setPosition(pos: Int) {
+    fun setPosition(pos: Int) {
         yval = pos
     }
 }
