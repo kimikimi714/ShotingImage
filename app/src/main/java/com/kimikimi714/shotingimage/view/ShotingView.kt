@@ -11,6 +11,8 @@ import com.kimikimi714.shotingimage.R
 import com.kimikimi714.shotingimage.animation.VerticalAnimation
 
 class ShotingView(context: Context) : View(context) {
+    private val animation = VerticalAnimation(this, 3000)
+
     /**
      * 一度でもタッチイベントが発生していたらtrue
      */
@@ -40,11 +42,8 @@ class ShotingView(context: Context) : View(context) {
 
         aircraft.moveTo(event.x, event.y)
         bullet = Bullet(event.x, event.y)
-        // 最終position
-        val endPosition = 3000
-        val animation = VerticalAnimation(this, endPosition)
         // アニメーションの起動期間を設定
-        animation.setDuration(1000)
+        animation.setDuration(2000)
         this.startAnimation(animation)
         invalidate()
         return super.dispatchTouchEvent(event)
@@ -59,7 +58,7 @@ class ShotingView(context: Context) : View(context) {
 
     inner class Bullet() : RectF() {
         private var topAbs = 0f
-        private val rectHalfWidth = 100f
+        private val rectHalfWidth = 20f
         val paint = Paint()
 
         constructor(left: Float, top: Float) : this() {
@@ -81,7 +80,7 @@ class ShotingView(context: Context) : View(context) {
 
     inner class Aircraft() : RectF() {
         val paint = Paint()
-        private val rectHalfWidth = 100f
+        private val rectHalfWidth = 50f
 
         constructor(left: Float, top: Float) : this() {
             this.left = left - rectHalfWidth
