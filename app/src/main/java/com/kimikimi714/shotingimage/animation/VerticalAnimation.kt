@@ -2,9 +2,9 @@ package com.kimikimi714.shotingimage.animation
 
 import android.view.animation.Animation
 import android.view.animation.Transformation
-import com.kimikimi714.shotingimage.view.FallView
+import com.kimikimi714.shotingimage.view.ShotingView
 
-class FallAnimation internal constructor(private val view: FallView, pos: Int) :
+class VerticalAnimation internal constructor(private val view: ShotingView, pos: Int) :
     Animation() {
 
     private var currentPosition = 0
