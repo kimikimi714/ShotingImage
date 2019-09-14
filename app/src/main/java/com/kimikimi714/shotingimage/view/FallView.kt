@@ -11,7 +11,7 @@ import com.kimikimi714.shotingimage.R
 import kotlin.random.Random
 
 class FallView(context: Context) : View(context) {
-    private var rect = FallSquare(Random.nextFloat() * 800, Random.nextFloat() * 500)
+    private var rect = FallSquare(Random.nextFloat() * 3000, Random.nextFloat() * 1000)
     private var yval = 0
     val position: Int
         get() = yval
@@ -41,9 +41,12 @@ class FallView(context: Context) : View(context) {
     }
 
     inner class FallSquare() : RectF() {
+        private var topAbs = 0f
         private val rectWidth = 200f
 
         constructor(left: Float, top: Float) : this() {
+            this.topAbs = top
+
             this.left = left
             this.top = top
             this.right = left + rectWidth
@@ -51,8 +54,8 @@ class FallView(context: Context) : View(context) {
         }
 
         fun fall() {
-            rect.top = rect.top + yval
-            rect.bottom = rect.top + rectWidth
+            top =  topAbs + yval
+            bottom = topAbs + rectWidth + yval
         }
     }
 }
