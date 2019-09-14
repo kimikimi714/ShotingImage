@@ -4,6 +4,9 @@ import android.view.animation.Animation
 import android.view.animation.Transformation
 import com.kimikimi714.shotingimage.view.ShotingView
 
+/**
+ * 垂直に等加速度運動するアニメーション
+ */
 class VerticalAnimation internal constructor(private val view: ShotingView, pos: Int) :
     Animation() {
 

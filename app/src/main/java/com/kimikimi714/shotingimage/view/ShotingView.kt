@@ -24,9 +24,6 @@ class ShotingView(context: Context) : View(context) {
         get() = yval
     private val aircraft = Aircraft(0f, 0f)
 
-    /**
-     * 描画・再描画時に呼ばれる
-     */
     override fun onDraw(canvas: Canvas) {
         if (firstTouch) {
             bullet.shot()
