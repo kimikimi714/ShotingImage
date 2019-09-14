@@ -40,13 +40,13 @@ class ShotingView(context: Context) : View(context) {
 
         aircraft.moveTo(event.x, event.y)
         bullet = Bullet(event.x, event.y)
-        invalidate()
         // 最終position
-        val endPosition = - 200
+        val endPosition = 3000
         val animation = VerticalAnimation(this, endPosition)
         // アニメーションの起動期間を設定
-        animation.setDuration(5000)
+        animation.setDuration(1000)
         this.startAnimation(animation)
+        invalidate()
         return super.dispatchTouchEvent(event)
     }
 
